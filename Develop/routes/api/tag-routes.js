@@ -9,7 +9,12 @@ router.get('/', async (req, res) => {
   // be sure to include its associated Product data
   try{
     const tagData = await Tag.findAll({
-      include: [{all: true, nested: true}]
+      include: [
+        {
+          model: Product,
+          as: "Products"
+        },
+      ]
     });
 
     res.status(200).json(tagData)
@@ -24,7 +29,12 @@ router.get('/:id', async (req, res) => {
   // be sure to include its associated Product data
   try{
     const tagData = await Tag.findByPk(req.params.id, {
-      include: [{all: true, nested: true}]
+      include: [
+        {
+          model: Product, 
+          as: "Products"
+        }
+      ]
     })
 
     if(!tagData){
@@ -39,7 +49,7 @@ router.get('/:id', async (req, res) => {
   } catch (error){
 
     res.status(500).json(error)
-    
+
   }
 });
 
@@ -47,8 +57,18 @@ router.post('/', (req, res) => {
   // create a new tag
   try{
 
+    Tag.create(req.body)
+    .then((tag) => {
+      console.log(tag)
+      if(!req.body){
+        res.status(404).json({message: "not valid"})
+      }
+      res.status(200).json(tag)
+    })
+
+
   } catch (error){
-    
+    res.status(500).json({name: error.name}, {message: error.message});
   }
 });
 

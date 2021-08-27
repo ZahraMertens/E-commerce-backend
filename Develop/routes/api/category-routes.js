@@ -73,13 +73,14 @@ router.put('/:id', (req, res) => {
   // update a category by its `id` value
 
   //check if category exists
+  // if(!req.body.id){
+
+  //       res.status(404).json({message: `There is no category with an id of ${req.params.id}!`})
+        
+  //     } else {
     try{
 
-    // if(!req.body.id === req.params.id){
-
-    //     res.status(404).json({message: `There is no category with an id of ${req.params.id}!`})
-        
-    //   } else {
+    
 
       Category.update(
         {
@@ -104,7 +105,7 @@ router.put('/:id', (req, res) => {
     } catch (error){
       res.status(500).json(error);
     }
-
+ // }
 });
 
 router.delete('/:id', (req, res) => {

@@ -46,10 +46,11 @@ router.get('/:id', async (req, res) => {
 router.post('/', (req, res) => {
   /* req.body should look like this...
     {
-      product_name: "Basketball",
-      price: 200.00,
-      stock: 3,
-      tagIds: [1, 2, 3, 4]
+      "product_name": "Basketballdecddcd",
+      "price": 200.00,
+      "stock": 3,
+      "category_id": [6], //add it to category
+      "tagIds": [3, 4, 5]
     }
   */
   Product.create(req.body)
@@ -78,8 +79,6 @@ router.post('/', (req, res) => {
 // update product
 router.put('/:id', (req, res) => {
   try{
-
-  
   // update product data
   Product.update(req.body, {
     where: {
@@ -127,8 +126,28 @@ router.delete('/:id', (req, res) => {
   // delete one product by its `id` value
   try{
 
+    Product.destroy(
+      {
+        where: {
+          id: req.params.id,
+        },
+      }
+    )
+    .then((deletedData) => {
+
+      if(!deletedData){
+        res.status(404).json({message: `There is no product with an id of ${req.params.id}!`})
+        return;
+      }
+
+      res.status(200).json({message: `Product with id of ${req.params.id} has successfuly been removed from the database!`});
+    })
+    .catch((err) => {
+      console.error(err)
+    })
+
   } catch (error){
-    
+    res.status(500).json(error);
   }
 });
 

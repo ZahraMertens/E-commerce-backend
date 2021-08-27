@@ -71,30 +71,40 @@ router.post('/', async (req, res) => {
 
 router.put('/:id', (req, res) => {
   // update a category by its `id` value
-  try{
 
-    Category.update(
-      {
-        category_name: req.body.category_name,
-      },
-      {
-        where: {
-          id: req.params.id,
+  //check if category exists
+    try{
+
+    // if(!req.body.id === req.params.id){
+
+    //     res.status(404).json({message: `There is no category with an id of ${req.params.id}!`})
+        
+    //   } else {
+
+      Category.update(
+        {
+          category_name: req.body.category_name,
         },
-      }
-    )
-    .then((updatedData) => {
+        {
+          where: {
+            id: req.params.id,
+          },
+        }
+      )
+      .then((updatedData) => {
+        // if(!updatedData){
+        //   res.status(404).json({message: `There is no category with an id of ${req.params.id}!`})
+        // }
         res.status(200).json({message: `Categoy with id of ${req.params.id} has successfuly been updated!`});
-    })
-    .catch((err) => {
-      console.error(err)
-    })
+      })
+      .catch((err) => {
+        console.error(err)
+      })
+    //}
+    } catch (error){
+      res.status(500).json(error);
+    }
 
-  } catch (error){
-    
-    res.status(500).json(error);
-
-  }
 });
 
 router.delete('/:id', (req, res) => {
@@ -109,7 +119,13 @@ router.delete('/:id', (req, res) => {
       }
     )
     .then((deletedData) => {
-        res.status(200).json({message: `Categoy with id of ${req.params.id} has successfuly been removed from the database!`});
+
+      if(!deletedData){
+        res.status(404).json({message: `There is no category with an id of ${req.params.id}!`})
+        return;
+      }
+
+      res.status(200).json({message: `Categoy with id of ${req.params.id} has successfuly been removed from the database!`});
     })
     .catch((err) => {
       console.error(err)

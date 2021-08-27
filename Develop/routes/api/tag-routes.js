@@ -12,7 +12,7 @@ router.get('/', async (req, res) => {
         {
           model: Product,
           attributes: ['id', 'product_name', 'price', 'stock', 'category_id'],
-          as: 'products'
+          as: 'Products', //Add alias because it is defined in the index.js relationships
         }
       ]
     });

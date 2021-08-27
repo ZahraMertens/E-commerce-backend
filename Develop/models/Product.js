@@ -16,14 +16,15 @@ Product.init(
       autoIncrement: true
     },
     product_name: {
-      type: DataTypes.STRING,
-      allowNull: false
+      type: DataTypes.STRING(150),
+      allowNull: false,
+      unique: true,
     },
     price: {
-      type: DataTypes.DECIMAL,
+      type: DataTypes.FLOAT,
       allowNull: false,
       validate: {
-        isDecimal: true
+        isFloat: true
       }
     },
     stock: {

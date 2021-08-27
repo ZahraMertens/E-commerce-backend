@@ -101,7 +101,23 @@ router.delete('/:id', (req, res) => {
   // delete a category by its `id` value
   try{
 
+    Category.destroy(
+      {
+        where: {
+          id: req.params.id,
+        },
+      }
+    )
+    .then((deletedData) => {
+        res.status(200).json({message: `Categoy with id of ${req.params.id} has successfuly been removed from the database!`});
+    })
+    .catch((err) => {
+      console.error(err)
+    })
+
   } catch (error){
+
+    res.status(500).json(error);
     
   }
 });

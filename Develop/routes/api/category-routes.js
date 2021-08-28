@@ -141,6 +141,7 @@ router.delete('/:id', (req, res) => {
       }
     )
     .then((deletedData) => {
+      // console.log(deletedData) // If no object returns empty array deletedData = 0 and if exists deletdData = 1
 
       if(!deletedData){
         res.status(404).json({message: `There is no category with an id of ${req.params.id}!`})
@@ -149,10 +150,9 @@ router.delete('/:id', (req, res) => {
 
       res.status(200).json({message: `Categoy with id of ${req.params.id} has successfuly been removed from the database!`});
     })
-    .catch((err) => {
-      console.error(err)
-    })
-
+    .catch((error) => {
+      res.status(404).json({name: error.name, message: error.message});
+    });
   } catch (error){
 
     res.status(500).json(error);

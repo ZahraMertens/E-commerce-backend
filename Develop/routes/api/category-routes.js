@@ -80,7 +80,7 @@ router.post('/', async (req, res) => {
 
 });
 
-router.put('/:id', async (req, res) => {
+router.put('/:id', (req, res) => {
   // update a category by its `id` value
     try{
 
@@ -104,7 +104,7 @@ router.put('/:id', async (req, res) => {
 
         res.status(200).json({message: `Categoy with id of ${req.params.id} has successfuly been updated!`});
       })
-      
+
       //Catches the error from the validation in category model as name can only contan letters and spaces
       .catch((err) => {
         res.status(404).json({message: `The name can't contain special cahracters or numbers`})

@@ -14,7 +14,7 @@ router.get('/', async (req, res) => {
     });
     res.status(200).json(productdData)
   } catch (error){
-    console.log(error)
+    //console.log(error)
     res.status(500).json(error)
   }
 });
@@ -44,15 +44,23 @@ router.get('/:id', async (req, res) => {
 
 // create new product
 router.post('/', (req, res) => {
-  /* req.body should look like this...
-    {
-      "product_name": "Basketballdecddcd",
-      "price": 200.00,
-      "stock": 3,
-      "category_id": [6], //add it to category
-      "tagIds": [3, 4, 5]
-    }
-  */
+  // req.body should look like this...
+  //   {
+  //     "product_name": "Basketballdecddcd",
+  //     "price": 200.00,
+  //     "stock": 3,
+  //     "category_id": [6], //add it to category
+  //     "tagIds": [3, 4, 5]
+  //   }
+  if (!req.body.product_name || ! req.body.price || !req.body.stock || !req.body.tagIds || !req.body.category_id){ 
+
+    //Error handling to ensure all parameters are provided
+    res.status(404).json({message: "There is a paramter missing, the product object must include product_name, price, stock, category_id and tagIds"});
+    return;
+
+  } else {
+
+    //If all parameters provided create product object including product Tags
   Product.create(req.body)
     .then((product) => {
       // if there's product tags, we need to create pairings to bulk create in the ProductTag model
@@ -73,6 +81,7 @@ router.post('/', (req, res) => {
       console.log(err);
       res.status(400).json(err);
     });
+  }
 });
 
 

@@ -59,25 +59,36 @@ router.get('/:id', async (req, res) => {
 
 router.post('/', async (req, res) => {
   try{
-
     //Create single category by parsing json object (Id is auto increment):
     //{
        //"category_name": "test_name"
     //}
-    const newCategory = await Category.create(req.body);
 
-    //If no json obj provided error res is error message
-    if(!req.body.category_name){
-      res.status(404).json({message: "not valid"})
-    };
+    await Category.create(req.body)
+    .then((newCategory) => {
 
-    res.status(200).json(newCategory)
+      res.status(200).json(newCategory);
+
+    })
+    //Return error if validation fails(name exists/unqiue or special characters/numbers)
+    .catch((error) => {
+      //console.log(error.name)
+
+      if(error.name == "SequelizeUniqueConstraintError"){
+
+        res.status(404).json({message: `The name already exits!`});
+
+      } else if (error.name == "SequelizeValidationError"){
+
+        res.status(404).json({message: `The name can't contain special characters or numbers`})
+      }
+     
+    })
 
   } catch (error){
 
     res.status(500).json({name: error.name}, {message: error.message});
   }
-
 });
 
 router.put('/:id', (req, res) => {
@@ -95,7 +106,6 @@ router.put('/:id', (req, res) => {
         }
       )
       .then((updatedData) => {
-        console.log(updatedData[0])
 
         if(!updatedData[0]){
           //Error as name is unique or id does not exists
@@ -107,7 +117,7 @@ router.put('/:id', (req, res) => {
 
       //Catches the error from the validation in category model as name can only contan letters and spaces
       .catch((err) => {
-        res.status(404).json({message: `The name can't contain special cahracters or numbers`})
+        res.status(404).json({message: `The name can't contain special characters or numbers`})
       });
 
     } catch (error){

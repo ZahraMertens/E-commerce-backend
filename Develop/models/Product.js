@@ -19,6 +19,9 @@ Product.init(
       type: DataTypes.STRING(150),
       allowNull: false,
       unique: true,
+      validate: {
+        is: [/^[A-Za-z\s]*$/], //RegExp contains letters and space only
+      }
     },
     price: {
       type: DataTypes.FLOAT,

@@ -17,10 +17,14 @@ router.get('/', async (req, res) => {
       ]
     });
 
-    res.status(200).json(tagData)
+    if(!tagData){
+      res.status(404).json({message: `There are no tags found!`})
+    }
+
+    res.status(200).json(tagData);
 
   } catch (error){
-    res.status(500).json({name: error.name, message: error.message})
+      res.status(500).json({name: error.name, message: error.message})
   }
 });
 
@@ -57,15 +61,29 @@ router.post('/', (req, res) => {
   // create a new tag
   try{
 
-    Tag.create(req.body)
-    .then((tag) => {
-      console.log(tag)
-      if(!req.body){
-        res.status(404).json({message: "not valid"})
-      }
-      res.status(200).json(tag)
-    })
+    //Validate before creating object if object contains tag_name
+    if(!req.body.tag_name){
 
+      res.status(404).json({message: "tag_name must be provided"});
+      return;
+
+    } else {
+
+      Tag.create(req.body)
+        .then((tagData) => {
+
+          res.status(200).json(tagData);
+
+        })
+        .catch((error) => {
+          //console.log(error.name);
+
+          if (error.name == "SequelizeValidationError"){
+            res.status(404).json({message: "The tag_name can't contain any nu,bers or special characters!"})
+          }
+          res.status(404).json({name: error.name}, {message: error.message});
+        })
+    }
 
   } catch (error){
     res.status(500).json({name: error.name}, {message: error.message});

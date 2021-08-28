@@ -13,7 +13,10 @@ Tag.init(
       autoIncrement: true
     },
     tag_name: {
-      type: DataTypes.STRING(100)
+      type: DataTypes.STRING(100),
+      validate: {
+        is: [/^[A-Za-z\s]*$/], //RegExp contains letters and space only
+      }
     }
   },
   {

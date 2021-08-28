@@ -114,13 +114,15 @@ router.put('/:id', (req, res) => {
       })
       .catch((error) => {
 
+        //Returns error if RegExp of model fails
         if (error.name == "SequelizeValidationError"){
           res.status(404).json({message: "The tag_name can't contain any numbers or special characters!"})
-        }
+        } //If other error
         res.status(404).json({name: error.name}, {message: error.message});
       })
     }
   } catch (error){
+    //If server error
     res.status(500).json(error);
   }
 
@@ -146,8 +148,8 @@ router.delete('/:id', (req, res) => {
 
       res.status(200).json({message: `Tag with id of ${req.params.id} has successfuly been removed from the database!`});
     })
-    .catch((err) => {
-      console.error(err)
+    .catch((error) => {
+      res.status(404).json({name: error.name, message: error.message})
     })
 
   } catch (error){

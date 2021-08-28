@@ -79,7 +79,7 @@ router.post('/', (req, res) => {
           //console.log(error.name);
 
           if (error.name == "SequelizeValidationError"){
-            res.status(404).json({message: "The tag_name can't contain any nu,bers or special characters!"})
+            res.status(404).json({message: "The tag_name can't contain any numbers or special characters!"})
           }
           res.status(404).json({name: error.name}, {message: error.message});
         })
@@ -93,27 +93,37 @@ router.post('/', (req, res) => {
 router.put('/:id', (req, res) => {
   // update a tag's name by its `id` value
   try{
+    //error handling before updating to ensure that only the name can be changed
+    if(!req.body.tag_name){
+        res.status(404).json({message: "tag_name must be provided"});
+        return;
+    } else {
 
-    Tag.update(
-      {
-        tag_name: req.body.tag_name,
-      },
-      {
-        where: {
-          id: req.params.id,
+      Tag.update(
+        {
+          tag_name: req.body.tag_name,
         },
-      }
-    )
-    .then((updatedData) => {
-      res.status(200).json({message: `Tag with id of ${req.params.id} has successfuly been updated!`});
-    })
-    .catch((err) => {
-      console.error(err)
-    })
-  //}
+        {
+          where: {
+            id: req.params.id,
+          },
+        }
+      )
+      .then((updatedData) => {
+        res.status(200).json({message: `Tag with id of ${req.params.id} has successfuly been updated!:`});
+      })
+      .catch((error) => {
+
+        if (error.name == "SequelizeValidationError"){
+          res.status(404).json({message: "The tag_name can't contain any numbers or special characters!"})
+        }
+        res.status(404).json({name: error.name}, {message: error.message});
+      })
+    }
   } catch (error){
     res.status(500).json(error);
   }
+
 });
 
 router.delete('/:id', (req, res) => {

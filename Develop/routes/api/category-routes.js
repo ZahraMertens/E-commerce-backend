@@ -116,8 +116,12 @@ router.put('/:id', (req, res) => {
       })
 
       //Catches the error from the validation in category model as name can only contan letters and spaces
-      .catch((err) => {
-        res.status(404).json({message: `The name can't contain special characters or numbers`})
+      .catch((error) => {
+
+        if (error.name == "SequelizeValidationError"){
+  
+          res.status(404).json({message: `The name can't contain special characters or numbers`})
+        }
       });
 
     } catch (error){

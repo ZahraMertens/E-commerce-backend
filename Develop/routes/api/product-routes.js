@@ -90,6 +90,14 @@ router.put('/:id', (req, res) => {
   try{
   // update product data
   Product.update(req.body, {
+    //Json object looks like: 
+    // {
+    //   "product_name": "",
+    //   "price": "",
+    //   "stock": "",
+    //   "category_id": "[1]",
+    //   "tagIds": "[1, 2, 3]"
+    // }
     where: {
       id: req.params.id,
     },
@@ -121,13 +129,24 @@ router.put('/:id', (req, res) => {
         ProductTag.bulkCreate(newProductTags),
       ]);
     })
-    .then((updatedProductTags) => res.json(updatedProductTags))
+    .then((updatedProductTags) => res.json({name: `The product with the id of ${req.params.id} has successfuly been updated!`, productTags: updatedProductTags}))
     .catch((err) => {
-      // console.log(err);
-      res.status(400).json(err);
+      //console.log(err);
+      //Modify the error handling to be more specific where to find the error
+      if (err.name == "TypeError"){
+
+        res.status(400).json({message: "You are missing a key value pair in your request body!"});
+      
+      } else if (err.name == "SequelizeValidationError"){
+
+        res.status(400).json({message: "The values entered are not valid, please check for special caharcters, numbers and letters!"});
+      }
+      res.status(400).json({name: err.name, message: err.message});
+
     });
   } catch (error){
-
+    //server error
+    res.status(500).json({name: err.name, message: err.message});
   }
 });
 

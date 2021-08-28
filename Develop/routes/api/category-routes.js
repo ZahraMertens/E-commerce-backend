@@ -4,46 +4,53 @@ const { Category, Product } = require('../../models');
 // The `/api/categories` endpoint
 
 router.get('/', async (req, res) => {
-  // find all categories
-  // be sure to include its associated Products
   try{
   const categoryData = await Category.findAll({
     include: [
       {
         model: Product,
-        attributes: ['id', 'product_name', 'price', 'stock', 'category_id'],
+        attributes: ['id', 'product_name', 'price', 'stock', 'category_id'], //Include associated products with category
     }],
   });
-  res.status(200).json(categoryData);
+  res.status(200).json(categoryData); //If no error return json of categories with products
 
   } catch (error){
-    res.status(500).json(error)
+
+    res.status(500).json(error); //If error catch error and status 500
+
   }
 
 });
 
+//Find category by Id which is a Primary key
 router.get('/:id', async (req, res) => {
-  // find one category by its `id` value
-  // be sure to include its associated Products
+ 
   try{
 
     const categoryData = await Category.findByPk(req.params.id, {
       include: [
         {
           model: Product,
-          attributes: ['id', 'product_name', 'price', 'stock', 'category_id'],
+          attributes: ['id', 'product_name', 'price', 'stock', 'category_id'], //Include categories associated Products
         }
       ],
     });
 
+    //Check if there is a category with the id parsed in the req.params
     if(!categoryData){
-      res.status(404).json({message: `There is no category with the id of ${req.params.id}!`})
+
+      //If id does not exist return 404 error and message
+      res.status(404).json({message: `There is no category with the id of ${req.params.id}!`});
+
     };
+
+    //If id exists return json object with id of category from the req.params
     res.status(200).json(categoryData)
 
   } catch (error) {
 
-    res.status(500).json(error);
+    //If error res is error
+    res.status(500).json({name: error.name, message: error.message});
 
   }
 });
@@ -51,12 +58,16 @@ router.get('/:id', async (req, res) => {
 
 
 router.post('/', async (req, res) => {
-  // create a new category
   try{
 
+    //Create single category by parsing json object (Id is auto increment):
+    //{
+       //"category_name": "test_name"
+    //}
     const newCategory = await Category.create(req.body);
 
-    if(!req.body){
+    //If no json obj provided error res is error message
+    if(!req.body.category_name){
       res.status(404).json({message: "not valid"})
     };
 
@@ -69,18 +80,9 @@ router.post('/', async (req, res) => {
 
 });
 
-router.put('/:id', (req, res) => {
+router.put('/:id', async (req, res) => {
   // update a category by its `id` value
-
-  //check if category exists
-  // if(!req.body.id){
-
-  //       res.status(404).json({message: `There is no category with an id of ${req.params.id}!`})
-        
-  //     } else {
     try{
-
-    
 
       Category.update(
         {
@@ -93,19 +95,24 @@ router.put('/:id', (req, res) => {
         }
       )
       .then((updatedData) => {
-        // if(!updatedData){
-        //   res.status(404).json({message: `There is no category with an id of ${req.params.id}!`})
-        // }
+        console.log(updatedData[0])
+
+        if(!updatedData[0]){
+          //Error as name is unique or id does not exists
+          res.status(404).json({message: `There is no category with an id of ${req.params.id} or the name already exists!`})
+        }
+
         res.status(200).json({message: `Categoy with id of ${req.params.id} has successfuly been updated!`});
       })
+      
+      //Catches the error from the validation in category model as name can only contan letters and spaces
       .catch((err) => {
-        console.error(err)
-      })
-    //}
+        res.status(404).json({message: `The name can't contain special cahracters or numbers`})
+      });
+
     } catch (error){
       res.status(500).json(error);
     }
- // }
 });
 
 router.delete('/:id', (req, res) => {

@@ -14,9 +14,12 @@ Category.init(
       autoIncrement:true
     },
     category_name: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(70),
       allowNull: false,
       unique: true,
+      validate: {
+        is: [/^[A-Za-z\s]*$/], //RegExp contains letters and space only
+      }
     }
   },
   {

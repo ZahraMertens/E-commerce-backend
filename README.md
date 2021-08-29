@@ -46,7 +46,9 @@ The Application "E-commerce-Backend" is the backend part powered by express.js a
 
 * 8️⃣ To protect your personal data you need to create a ".env" file in the root of the repository, which includes your mysql password, the database name, and the user such as:  ![env-Demo](./Assets/Readme/env_demo.png)
 
-* 9️⃣ The user must start the server in local host by runnding "npm start" and can then perform request in insomnia
+* 9️⃣ When the database is initialized then the user must run "node seeds/index" to seed the database with some given data
+
+* 🔟 The user must start the server in local host by runnding "npm start" and can then perform request in Insomnia
 
 ## Technologies Used
 
@@ -74,16 +76,22 @@ SO THAT my company can compete with other e-commerce companies
 
 * WHEN I open API GET routes in Insomnia Core for categories, products, or tags THEN the data for each of these routes is displayed in a formatted JSON
 
+* WHEN I open an api get route with an id in the path "/api/categories/1" THEN I am presented with the json object of the category with the specific id (Same fro tags and products)
+
+* WHEN I enter a path which does not exist THEN depending on the error it will show an error message or will direcr you to a status 200 code with a message showing that it is a wrong route
+
 * WHEN I test API POST, PUT, and DELETE routes in Insomnia Core THEN I am able to successfully create, update, and delete data in my database
-
-
-## Bonus
-
 
 
 ## Mock-Up
 
-🎥 The GIF shows the command line application and the functionality:
+🎥 The GIF shows the GET Routes of the backend application:
+
+![Demo of all get routes](./Assets/Readme/get-routes.gif)
+
+🎥 The GIF shows the PUT Routes of the backend application, where we add a category, a tag and a product:
+
+![Demo of all get routes](./Assets/Readme/put-routes.gif)
 
 
 ## Credits

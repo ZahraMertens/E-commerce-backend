@@ -17,9 +17,8 @@
 5. [Technologies Used](#technologies-used)
 6. [User Story](#user-story)
 7. [Actual Behaviour](#actual-behaviour)
-8. [Bonus](#bonus)
-9. [Mock-Up](#mock-up)
-10. [Credits](#credits)
+8. [Mock-Up](#mock-up)
+9. [Credits](#credits)
 
 
 ## Task Description
@@ -104,8 +103,12 @@ SO THAT my company can compete with other e-commerce companies
 
 ## Credits
 
-* 
-
+* https://emojipedia.org/keycap-10/
+* https://dev.to/devdammak/setting-up-eslint-in-your-javascript-project-with-vs-code-2amf
+* https://stackoverflow.com/questions/49995637/sequelizeforeignkeyconstrainterror-on-nested-findorcreate-inside-a-loop
+* https://www.npmjs.com/package/sequelize
+* https://sequelize.org/
+* https://sequelize.org/master/manual/validations-and-constraints.html
 
 
 © 2021 Zahra Mertens, E-commerce-backend

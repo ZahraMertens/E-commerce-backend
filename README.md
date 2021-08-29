@@ -44,7 +44,7 @@ The Application "E-commerce-Backend" is the backend part powered by express.js a
 
 * 7️⃣ The user must also download Insomnia or postman to be able to perform the request without the frontend
 
-* 8️⃣ To protect your personal data you need to create a ".env" file which includes your mysql password, the database name, and the user such as:  ![env-Demo](./Assets/Readme/env-demo.png)
+* 8️⃣ To protect your personal data you need to create a ".env" file in the root of the repository, which includes your mysql password, the database name, and the user such as:  ![env-Demo](./Assets/Readme/env-demo.png)
 
 * 9️⃣ The user must start the server in local host by runnding "npm start" and can then perform request in insomnia
 

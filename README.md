@@ -89,9 +89,17 @@ SO THAT my company can compete with other e-commerce companies
 
 ![Demo of all get routes](./Assets/Readme/get-routes.gif)
 
-🎥 The GIF shows the PUT Routes of the backend application, where we add a category, a tag and a product:
+🎥 The GIF shows the POST Routes of the backend application, where we add a category, a tag and a product:
+
+![Demo of all get routes](./Assets/Readme/post-routes.gif)
+
+🎥 The GIF shows the PUT Routes of the backend application:
 
 ![Demo of all get routes](./Assets/Readme/put-routes.gif)
+
+🎥 The GIF shows the DELETE Routes of the backend application, where we add a category, a tag and a product:
+
+![Demo of all get routes](./Assets/Readme/delete-routes.gif)
 
 
 ## Credits

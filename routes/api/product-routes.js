@@ -45,13 +45,13 @@ router.get('/:id', async (req, res) => {
 // create new product
 router.post('/', (req, res) => {
   // req.body should look like this...
-  //   {
-  //     "product_name": "Basketballdecddcd",
-  //     "price": 200.00,
-  //     "stock": 3,
-  //     "category_id": [6], //add it to category
-  //     "tagIds": [3, 4, 5]
-  //   }
+    // {
+    //   "product_name": "Basketballdecddcd",
+    //   "price": 200.00,
+    //   "stock": 3,
+    //   "category_id": [6], //add it to category
+    //   "tagIds": [3, 4, 5]
+    // }
   if (!req.body.product_name || ! req.body.price || !req.body.stock || !req.body.tagIds || !req.body.category_id){ 
 
     //Error handling to ensure all parameters are provided

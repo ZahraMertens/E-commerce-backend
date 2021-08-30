@@ -5,7 +5,7 @@
 
 ## General Information
  
-* [Walkthrough Video E-Commerce Backend Application]()
+* [Walkthrough Video E-Commerce Backend Application](https://drive.google.com/file/d/1TQjMN9b0bPNxH9o8W0OZ_EAZtV5mjvQU/view?usp=sharing)
 
 * [GitHub repository of E-Commerce Backend Application](https://github.com/ZahraMertens/E-commerce-backend.git)
 
